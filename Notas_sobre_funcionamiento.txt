@@ -1,0 +1,10 @@
+/*
+   ---- Luis Carlos Somoza Ledezma -----
+*/
+
+Para poder accesar a todas las tablas dentro de la base de datos y poder realizar una conexión exitosa 
+se requiere crear un servidor local dentro de nuestras computadoras, que conecte el programa principal 
+con nuestra base de datos. Para ello se hace uso de la dependencia EXPRESS de node la cual permite a 
+través de sus métodos establecer esta conexión, adicionalmente incorporé la independencia SEQUELIZE 
+la cuál permite un manejo más sencillo de la base de datos dentro del programa, ya que permite definir 
+funciones reutilizables que permiten realizar las operaciones CRUD.
