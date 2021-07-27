@@ -1,17 +1,18 @@
-const url = 'http://localhost:3000/Ciudad/';
+const url = 'http://localhost:3000/Linea/';
 const contenedor = document.querySelector('tbody');
 let resultados = '';
 
 const modalLinea = new bootstrap.Modal(document.getElementById('modalLinea'));
 const formLinea = document.querySelector('form');
 
-const nombre_ciudad= document.getElementById('nombre_ciudad');
+const cod_linea = document.getElementById('cod_linea');
+const descripcion = document.getElementById('descripcion');
 
 let opcion = '';
 
 btnCrear.addEventListener('click', ()=> {
-    nombre_ciudad.value = '';
-
+    descripcion.value = '';
+    cod_linea.value = '';
     modalLinea.show();
     opcion = 'crear';
 });
@@ -20,7 +21,8 @@ btnCrear.addEventListener('click', ()=> {
 const mostrar = (l) => {
     l.forEach(linea => {
         resultados += ` <tr>
-                            <td>${linea.nombre_ciudad}</td>
+                            <td>${linea.cod_linea}</td>
+                            <td>${linea.descripcion}</td>
                             <td class="text-center"><a class="btnEditar btn btn-primary">EDITAR</a><a class="btnBorrar btn btn-danger">BORRAR</a></td>
                         </tr>`;
     });
@@ -39,7 +41,6 @@ const on = (element, event, selector, handler) => {
 on(document, 'click','.btnBorrar', (e)=>{
     const fila = e.target.parentNode.parentNode;
     const idaux = fila.firstElementChild.innerHTML;
-    console.log('BORRANDO '+ idaux);
     alertify.confirm("This is a confirm dialog.",
     function(){
         fetch(url+idaux, {
@@ -55,13 +56,15 @@ on(document, 'click','.btnBorrar', (e)=>{
 });//FIN DE FUNCION ON(); PARA BORRADO DE LINEA
 
 //PROCEDIMIENTO EDITAR DATOS DE LA BASE DE DATOS
-let idForm;
+let idForm = 0;
 on(document, 'click','.btnEditar', (e)=>{
     const fila = e.target.parentNode.parentNode;
 
     idForm = fila.children[0].innerHTML;
-    console.log(idForm);
-    nombre_ciudad.value = idForm;
+    const descripcionForm = fila.children[1].innerHTML;
+
+    cod_linea.value = idForm;
+    descripcion.value = descripcionForm;
 
     opcion = 'editar';
     modalLinea.show();
@@ -75,7 +78,8 @@ formLinea.addEventListener('submit', (e)=>{
             method: 'PUT',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
-                nombre_ciudad: nombre_ciudad.value
+                cod_linea: cod_linea.value,
+                descripcion: descripcion.value
             })
         })
         .then((response) => response.json())
@@ -87,7 +91,8 @@ formLinea.addEventListener('submit', (e)=>{
            method: 'POST',
            headers: {'Content-Type':'application/json'},
            body: JSON.stringify({
-                nombre_ciudad: nombre_ciudad.value
+                cod_linea: cod_linea.value,
+                descripcion: descripcion.value
            })
        })
        .then((response) => response.json())
